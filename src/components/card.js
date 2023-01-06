@@ -19,13 +19,15 @@ const styles = StyleSheet.create({
     shadowColor: colors.grey,
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    marginHorizontal: 4,
-    marginVertical: 6
+    marginHorizontal: 10,
+    marginVertical: 5
   },
 
   cardContent: {
     marginLeft: 20,
-    marginVertical: 20
+    marginVertical: 20,
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 

@@ -3,6 +3,7 @@ import { SafeAreaView, ActivityIndicator, FlatList, StyleSheet, Text, useColorSc
 
 import Card from "./src/components/card";
 import TextIconButton from "./src/components/text-icon-button";
+import SideButton from "./src/components/side-button";
 
 import { fonts } from "./src/styles/fonts";
 import { colors } from "./src/styles/colors";
@@ -25,6 +26,7 @@ const App = () => {
 
   const filterByYear = () => {};
   const sortDescending = () => {};
+  const refresh = () => {};
 
   useEffect(() => {
     getLaunches();
@@ -34,6 +36,9 @@ const App = () => {
 
   return (
     <SafeAreaView>
+      <View style={[styles.buttonContainer, styles.sideButtonContainer]}>
+        <SideButton title="Reload Data" icon={require("./src/assets/images/icons/refresh.png")} onPress={refresh} />
+      </View>
       <View>
         <View style={styles.buttonContainer}>
           <TextIconButton
@@ -56,9 +61,12 @@ const App = () => {
               keyExtractor={({ flight_number }, index) => flight_number}
               renderItem={({ item }) => (
                 <Card>
-                  <Text>
-                    {item.flight_number}, {item.mission_name}, {item.rocket.rocket_name},{item.launch_date_utc},
-                  </Text>
+                  <Text style={styles.flightText}>#{item.flight_number}</Text>
+                  <Text style={styles.missionText}>{item.mission_name}</Text>
+                  <View style={styles.stackContainer}>
+                    <Text style={styles.dateText}>{item.launch_date_utc},</Text>
+                    <Text style={styles.rocketText}>{item.rocket.rocket_name}</Text>
+                  </View>
                 </Card>
               )}
             />
@@ -75,10 +83,36 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end"
   },
 
-  titleText: {
-    fontSize: 24,
-    fontFamily: fonts.regularItalic,
-    color: colors.blue
+  sideButtonContainer: {
+    marginBottom: 40
+  },
+
+  flightText: {
+    fontSize: 30,
+    fontFamily: fonts.medium,
+    color: colors.grey,
+    flex: 1
+  },
+  missionText: {
+    fontSize: 22,
+    fontFamily: fonts.medium,
+    color: colors.grey,
+    flex: 4
+  },
+
+  stackContainer: {
+    flex: 2
+  },
+
+  dateText: {
+    fontSize: 10,
+    fontFamily: fonts.regular,
+    color: colors.grey
+  },
+  rocketText: {
+    fontSize: 14,
+    fontFamily: fonts.bold,
+    color: colors.grey
   }
 });
 
