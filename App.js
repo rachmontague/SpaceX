@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ActivityIndicator, FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 
+import { format } from "date-fns";
+
 import Card from "./src/components/card";
 import TextIconButton from "./src/components/text-icon-button";
 import SideButton from "./src/components/side-button";
@@ -27,6 +29,10 @@ const App = () => {
   const filterByYear = () => {};
   const sortDescending = () => {};
   const refresh = () => {};
+
+  const convertDate = dateString => {
+    return format(new Date(dateString), "do MMMM Y");
+  };
 
   useEffect(() => {
     getLaunches();
@@ -64,7 +70,7 @@ const App = () => {
                   <Text style={styles.flightText}>#{item.flight_number}</Text>
                   <Text style={styles.missionText}>{item.mission_name}</Text>
                   <View style={styles.stackContainer}>
-                    <Text style={styles.dateText}>{item.launch_date_utc},</Text>
+                    <Text style={styles.dateText}>{convertDate(item.launch_date_utc)}</Text>
                     <Text style={styles.rocketText}>{item.rocket.rocket_name}</Text>
                   </View>
                 </Card>
