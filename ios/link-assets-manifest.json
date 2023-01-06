@@ -1,0 +1,25 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/BrandonGrotesque-Black.ttf",
+      "sha1": "4e0df9d3c60a273b4ce444faddddc57e3fee7cd2"
+    },
+    {
+      "path": "src/assets/fonts/BrandonGrotesque-Bold.ttf",
+      "sha1": "8d382180b40c6293c6997dd5ecd7f80b83b4f500"
+    },
+    {
+      "path": "src/assets/fonts/BrandonGrotesque-Medium.ttf",
+      "sha1": "e4b5cd46ab9003972ed1fcd4258982bca357502c"
+    },
+    {
+      "path": "src/assets/fonts/BrandonGrotesque-Regular.ttf",
+      "sha1": "09210b399d45849248e75d81cb09d92de930cdc2"
+    },
+    {
+      "path": "src/assets/fonts/BrandonGrotesque-RegularItalic.ttf",
+      "sha1": "e7c477e28cf66a8007604e0cc8a420ded9e51be0"
+    }
+  ]
+}
