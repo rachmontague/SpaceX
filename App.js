@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import { SafeAreaView, ActivityIndicator, FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { SafeAreaView, FlatList, StyleSheet, Text, View } from "react-native";
 import { format } from "date-fns";
 
 import Card from "./src/components/card";
@@ -10,35 +11,26 @@ import SideButton from "./src/components/side-button";
 import { fonts } from "./src/styles/fonts";
 import { colors } from "./src/styles/colors";
 
-const App = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+import { fetchLaunches, selectLaunches } from "./src/features/launches/launchesSlice";
 
-  const getLaunches = async () => {
-    try {
-      const response = await fetch("https://api.spacexdata.com/v3/launches?limit=25");
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+const App = () => {
+  const data = useSelector(selectLaunches);
+  const dispatch = useDispatch();
 
   const filterByYear = () => {};
   const sortDescending = () => {};
-  const refresh = () => {};
+
+  const refresh = () => {
+    dispatch(fetchLaunches());
+  };
 
   const convertDate = dateString => {
     return format(new Date(dateString), "do MMMM Y");
   };
 
   useEffect(() => {
-    getLaunches();
+    dispatch(fetchLaunches());
   }, []);
-
-  const isDarkMode = useColorScheme() === "dark";
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -59,24 +51,20 @@ const App = () => {
       </View>
 
       <View style={styles.listContainer}>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <FlatList
-            data={data}
-            keyExtractor={({ flight_number }, index) => flight_number}
-            renderItem={({ item }) => (
-              <Card>
-                <Text style={styles.flightText}>#{item.flight_number}</Text>
-                <Text style={styles.missionText}>{item.mission_name}</Text>
-                <View style={styles.stackContainer}>
-                  <Text style={styles.dateText}>{convertDate(item.launch_date_utc)}</Text>
-                  <Text style={styles.rocketText}>{item.rocket.rocket_name}</Text>
-                </View>
-              </Card>
-            )}
-          />
-        )}
+        <FlatList
+          data={data}
+          keyExtractor={({ flight_number }, index) => flight_number}
+          renderItem={({ item }) => (
+            <Card>
+              <Text style={styles.flightText}>#{item.flight_number}</Text>
+              <Text style={styles.missionText}>{item.mission_name}</Text>
+              <View style={styles.stackContainer}>
+                <Text style={styles.dateText}>{convertDate(item.launch_date_utc)}</Text>
+                <Text style={styles.rocketText}>{item.rocket.rocket_name}</Text>
+              </View>
+            </Card>
+          )}
+        />
       </View>
     </SafeAreaView>
   );
