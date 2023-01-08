@@ -16,7 +16,7 @@ const App = () => {
 
   const getLaunches = async () => {
     try {
-      const response = await fetch("https://api.spacexdata.com/v3/launches?limit=10");
+      const response = await fetch("https://api.spacexdata.com/v3/launches?limit=25");
       const json = await response.json();
       setData(json);
     } catch (error) {
@@ -41,49 +41,53 @@ const App = () => {
   const isDarkMode = useColorScheme() === "dark";
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={[styles.buttonContainer, styles.sideButtonContainer]}>
         <SideButton title="Reload Data" icon={require("./src/assets/images/icons/refresh.png")} onPress={refresh} />
       </View>
-      <View>
-        <View style={styles.buttonContainer}>
-          <TextIconButton
-            title="Filter by Year"
-            icon={require("./src/assets/images/icons/select.png")}
-            onPress={filterByYear}
+      <View style={styles.buttonContainer}>
+        <TextIconButton
+          title="Filter by Year"
+          icon={require("./src/assets/images/icons/select.png")}
+          onPress={filterByYear}
+        />
+        <TextIconButton
+          title="Sort Descending"
+          icon={require("./src/assets/images/icons/sort.png")}
+          onPress={sortDescending}
+        />
+      </View>
+
+      <View style={styles.listContainer}>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            data={data}
+            keyExtractor={({ flight_number }, index) => flight_number}
+            renderItem={({ item }) => (
+              <Card>
+                <Text style={styles.flightText}>#{item.flight_number}</Text>
+                <Text style={styles.missionText}>{item.mission_name}</Text>
+                <View style={styles.stackContainer}>
+                  <Text style={styles.dateText}>{convertDate(item.launch_date_utc)}</Text>
+                  <Text style={styles.rocketText}>{item.rocket.rocket_name}</Text>
+                </View>
+              </Card>
+            )}
           />
-          <TextIconButton
-            title="Sort Descending"
-            icon={require("./src/assets/images/icons/sort.png")}
-            onPress={sortDescending}
-          />
-        </View>
-        <View>
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <FlatList
-              data={data}
-              keyExtractor={({ flight_number }, index) => flight_number}
-              renderItem={({ item }) => (
-                <Card>
-                  <Text style={styles.flightText}>#{item.flight_number}</Text>
-                  <Text style={styles.missionText}>{item.mission_name}</Text>
-                  <View style={styles.stackContainer}>
-                    <Text style={styles.dateText}>{convertDate(item.launch_date_utc)}</Text>
-                    <Text style={styles.rocketText}>{item.rocket.rocket_name}</Text>
-                  </View>
-                </Card>
-              )}
-            />
-          )}
-        </View>
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+    marginTop: 30
+  },
+
   buttonContainer: {
     flexDirection: "row",
     alignSelf: "flex-end"
