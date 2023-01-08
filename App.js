@@ -54,7 +54,7 @@ const App = () => {
       <View style={styles.listContainer}>
         <FlatList
           data={data}
-          keyExtractor={({ flight_number }, index) => flight_number}
+          keyExtractor={({ flight_number }, index) => flight_number + index}
           renderItem={({ item }) => (
             <Card>
               <Text style={styles.flightText}>#{item.flight_number}</Text>

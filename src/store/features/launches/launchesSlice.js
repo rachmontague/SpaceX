@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const fetchLaunches = createAsyncThunk("launches/fetchLaunches", async thunkAPI => {
-  const response = await fetch("https://api.spacexdata.com/v3/launches?limit=25");
+  const response = await fetch("https://api.spacexdata.com/v3/launches");
   const json = await response.json();
   return json;
 });
