@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ActivityIndicator, FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 
+import { SafeAreaView, ActivityIndicator, FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 import { format } from "date-fns";
 
 import Card from "./src/components/card";
