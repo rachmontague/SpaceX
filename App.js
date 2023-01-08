@@ -11,7 +11,8 @@ import SideButton from "./src/components/side-button";
 import { fonts } from "./src/styles/fonts";
 import { colors } from "./src/styles/colors";
 
-import { fetchLaunches, selectLaunches } from "./src/features/launches/launchesSlice";
+import { fetchLaunches } from "./src/store/features/launches/launchesSlice";
+import { selectLaunches } from "./src/store/features/launches/launchesSelectors";
 
 const App = () => {
   const data = useSelector(selectLaunches);

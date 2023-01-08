@@ -27,8 +27,6 @@ export const launchesSlice = createSlice({
   }
 });
 
-export const selectLaunches = state => state.launches.value;
-
 export const {} = launchesSlice.actions;
 
 export default launchesSlice.reducer;
